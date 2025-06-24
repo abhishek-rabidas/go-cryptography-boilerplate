@@ -7,6 +7,7 @@ import (
 	"encoding/pem"
 	"log"
 	"os"
+	"time"
 )
 
 func main() {
@@ -21,6 +22,10 @@ func main() {
 	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
 		Type:  "RSA PRIVATE KEY",
 		Bytes: privateKeyBytes,
+		Headers: map[string]string{
+			"Author":       "Abhishek Kumar Rabidas",
+			"Generated-On": time.Now().Format(time.RFC3339),
+		},
 	})
 	err = os.WriteFile("./keys/private.pem", privateKeyPEM, 0644)
 	if err != nil {
@@ -34,6 +39,10 @@ func main() {
 	publicKeyPEM := pem.EncodeToMemory(&pem.Block{
 		Type:  "RSA PUBLIC KEY",
 		Bytes: publicKeyBytes,
+		Headers: map[string]string{
+			"Author":       "Abhishek Kumar Rabidas",
+			"Generated-On": time.Now().Format(time.RFC3339),
+		},
 	})
 	err = os.WriteFile("./keys/public.pem", publicKeyPEM, 0644)
 	if err != nil {
